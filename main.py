@@ -1,11 +1,8 @@
 from tkinter import *
 import tkinter as tk
-from geopy.geocoders import Nominatim
-from tkinter import ttk, messagebox
-from timezonefinder import TimezoneFinder
+from tkinter import messagebox
 from datetime import datetime
 import requests
-import pytz
 
 root = Tk()
 root.title("Weather App")
@@ -15,13 +12,7 @@ root.resizable(False,False)
 def getweather():
     try:
         city = textfield.get()
-
-        # clock
-
-
-        # weather
         api = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=YourAPIKeys"
-
         json_data = requests.get(api).json()
         condition = json_data['weather'][0]['main']
         description = json_data['weather'][0]['description']
@@ -32,16 +23,22 @@ def getweather():
 
         t.config(text=(temp, "°"))
         c.config(text=(condition, "|", "Feels", "Like", temp, "°"))
-
         w.config(text=wind)
         h.config(text=humidity)
         d.config(text=description)
         p.config(text=pressure)
 
+        now = datetime.now()
+        formatted_date = now.strftime("%a, %b %d, %Y")
+        datetext.config(text=formatted_date)
+
     except Exception as e:
         messagebox.showerror("Weather App", "کشور وارد شده معتبر نمی‌باشد.")
 
 #search box
+Search_text = Label(text="Enter City: ", font=("arial", 16), fg="black")
+Search_text.place(x=100, y=45)
+
 Search_image = PhotoImage(file="images/search.png")
 myimage = Label(image=Search_image)
 myimage.place(x=200,y=20)
@@ -64,11 +61,9 @@ Frame_image = PhotoImage(file="images/box.png")
 frame_myimage = Label(image=Frame_image)
 frame_myimage.pack(padx=5, pady=5, side=BOTTOM)
 
-#time
-name = Label(root, font=("arial", 15, "bold"))
-name.place(x=30, y=100)
-clock = Label(root, font=("Helvetica", 20))
-clock.place(x=30, y=130)
+#date
+datetext = Label(root, font=("arial", 12))
+datetext.place(x=400, y=290)
 
 #label
 label1= Label(root, text="Wind", font=("Helvetica", 15, "bold"), fg="white", bg="#1ab5ef")
