@@ -5,7 +5,7 @@ from tkinter import ttk, messagebox
 from timezonefinder import TimezoneFinder
 from datetime import datetime
 import requests
-from pytz import timezone
+import pytz
 
 root = Tk()
 root.title("Weather App")
@@ -15,6 +15,9 @@ root.resizable(False,False)
 def getweather():
     try:
         city = textfield.get()
+
+        # clock
+
 
         # weather
         api = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=966b7621b312967e84d45d58f512f596"
@@ -36,7 +39,7 @@ def getweather():
         p.config(text=pressure)
 
     except Exception as e:
-        messagebox.showerror("Weather App", "Invalid Entry!!")
+        messagebox.showerror("Weather App", "کشور وارد شده معتبر نمی‌باشد.")
 
 #search box
 Search_image = PhotoImage(file="images/search.png")
@@ -54,7 +57,7 @@ myimage_icon.place(x=580, y=34)
 #logo
 Logo_image = PhotoImage(file="images/weather-logo.png")
 logo = Label(image=Logo_image)
-logo.place(x=150, y=115)
+logo.place(x=120, y=115)
 
 #Bottom-box
 Frame_image = PhotoImage(file="images/box.png")
